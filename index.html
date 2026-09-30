@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cream Spa & Cafe | 하노이 미딩 스파 & 카페</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-pink: #d84b7a;
+      --soft-pink: #fdf2f4;
+      --warm-yellow: #f8c045;
+      --charcoal: #2a2a2a;
+      --cream-bg: #faf8f5;
+      --card-bg: #ffffff;
+      --gold-accent: #c49a45;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: var(--cream-bg);
+      color: var(--charcoal);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    /* 네비게이션 */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 5%;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--primary-pink);
+      text-decoration: none;
+    }
+
+    .flower-icon {
+      font-size: 1.5rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--charcoal);
+      font-weight: 500;
+      margin-left: 2rem;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--primary-pink);
+    }
+
+    /* 첫 번째 섹션: 히어로 트랜지션 */
+    #hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .hero-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transform: scale(1.08);
+      transition: opacity 2s ease-in-out, transform 8s ease-out;
+    }
+
+    .hero-slide.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(20, 15, 25, 0.45) 0%, rgba(20, 15, 25, 0.75) 100%);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      max-width: 800px;
+      padding: 0 1.5rem;
+      animation: fadeInGlow 2s ease-out forwards;
+    }
+
+    .hero-content h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--warm-yellow);
+      margin-bottom: 1rem;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 4px 15px rgba(216, 75, 122, 0.4);
+    }
+
+    .hero-content p {
+      font-size: 1.15rem;
+      font-weight: 300;
+      margin-bottom: 2rem;
+      word-break: keep-all;
+    }
+
+    .btn-reserve {
+      display: inline-block;
+      background: var(--primary-pink);
+      color: #fff;
+      padding: 0.9rem 2.2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(216, 75, 122, 0.4);
+    }
+
+    .btn-reserve:hover {
+      background: #bd3c66;
+      transform: translateY(-2px);
+    }
+
+    /* 공통 섹션 스타일 */
+    section {
+      padding: 6rem 5% 5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-header span {
+      font-family: 'Cinzel', serif;
+      color: var(--primary-pink);
+      font-weight: 700;
+      letter-spacing: 2px;
+      font-size: 0.95rem;
+    }
+
+    .section-header h2 {
+      font-size: 2.2rem;
+      margin-top: 0.4rem;
+      color: var(--charcoal);
+    }
+
+    /* 두 번째 섹션: 공간 및 시설 소개 */
+    .facilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .facility-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      transition: transform 0.3s;
+    }
+
+    .facility-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .facility-img {
+      height: 220px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .facility-info {
+      padding: 1.5rem;
+    }
+
+    .facility-info h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.6rem;
+      color: var(--charcoal);
+    }
+
+    .facility-info p {
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    /* 세 번째 섹션: 스파 코스 & 가격 */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .pricing-card {
+      background: var(--card-bg);
+      border: 1px solid #f0e6e8;
+      border-radius: 18px;
+      padding: 2.2rem;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    }
+
+    .pricing-card.featured {
+      border: 2px solid var(--primary-pink);
+    }
+
+    .badge {
+      position: absolute;
+      top: -12px;
+      right: 20px;
+      background: var(--primary-pink);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+    }
+
+    .card-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: #777;
+      margin-bottom: 1.5rem;
+    }
+
+    .price-list {
+      list-style: none;
+    }
+
+    .price-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px dashed #eee;
+    }
+
+    .price-item:last-child {
+      border-bottom: none;
+    }
+
+    .price-time {
+      font-weight: 500;
+    }
+
+    .price-cost {
+      font-weight: 700;
+      color: var(--primary-pink);
+    }
+
+    /* 카페 메뉴 */
+    .cafe-section {
+      background: #fff;
+      border-radius: 20px;
+      padding: 3rem 2.5rem;
+      box-shadow: 0 4px 25px rgba(0,0,0,0.04);
+    }
+
+    .cafe-notice {
+      text-align: center;
+      background: var(--soft-pink);
+      color: var(--primary-pink);
+      padding: 0.9rem;
+      border-radius: 10px;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    .cafe-menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+
+    .cafe-col h4 {
+      font-size: 1.1rem;
+      border-bottom: 2px solid var(--gold-accent);
+      padding-bottom: 0.4rem;
+      margin-bottom: 1rem;
+      color: var(--charcoal);
+    }
+
+    .cafe-list {
+      list-style: none;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .cafe-list li {
+      margin-bottom: 0.45rem;
+    }
+
+    /* 푸터 & 예약 배너 */
+    footer {
+      background: #201e21;
+      color: #f0f0f0;
+      padding: 4rem 5% 2rem;
+      margin-top: 4rem;
+    }
+
+    .footer-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .footer-info h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
+      color: #fff;
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-info p {
+      color: #aaa;
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .footer-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      justify-content: center;
+    }
+
+    .btn-contact {
+      background: #f8c045;
+      color: #222;
+      padding: 0.8rem 1.8rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .copyright {
+      text-align: center;
+      border-top: 1px solid #333;
+      padding-top: 1.5rem;
+      margin-top: 3rem;
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    @keyframes fadeInGlow {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .hero-content h1 { font-size: 2.1rem; }
+      nav { display: none; } /* 심플 모바일 레이아웃 */
+      .cafe-section { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 헤더 -->
+  <header>
+    <a href="#hero" class="brand">
+      <span class="flower-icon">🌸</span> Cream Spa
+    </a>
+    <nav>
+      <a href="#about">스파 소개</a>
+      <a href="#facilities">내부 시설</a>
+      <a href="#pricing">서비스 & 가격</a>
+      <a href="#cafe">카페 음료</a>
+    </nav>
+  </header>
+
+  <!-- 1. 첫 페이지: 히어로 & 스파 소개 (몽환적인 트랜지션) -->
+  <div id="hero">
+    <!-- Unsplash 고화질 힐링 스파 이미지 교차 페이드 -->
+    <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1920&q=80');"></div>
+    <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&w=1920&q=80');"></div>
+    <div class="hero-overlay"></div>
+    
+    <div class="hero-content">
+      <h2>Hanoi My Dinh Premium Therapy</h2>
+      <h1>Good Vibes Only,<br>Cream Spa & Cafe</h1>
+      <p>전 객실 1인 프라이빗 룸과 프리미엄 크림 테라피.<br>도심 속 완벽한 휴식과 달콤한 카페 음료를 한 자리에서 만나보세요.</p>
+      <a href="#pricing" class="btn-reserve">프로그램 & 가격 보기</a>
+    </div>
+  </div>
+
+  <!-- 2. 두 번째 섹션: 내부 이미지 & 공간 소개 -->
+  <section id="facilities">
+    <div class="section-header">
+      <span>PRIVATE & RELAXING SPACE</span>
+      <h2>도심 속 아늑하고 감각적인 힐링</h2>
+    </div>
+
+    <div class="facilities-grid">
+      <div class="facility-card">
+        <div class="facility-img" style="background-image: url('https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=600&q=80');"></div>
+        <div class="facility-info">
+          <h3>1인 프라이빗 룸 & 샤워실</h3>
+          <p>전 객실 단독 룸 구성으로 타인의 방해 없이 안락하게 관리받을 수 있으며 개별 샤워 시설이 완비되어 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="facility-card">
+        <div class="facility-img" style="background-image: url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80');"></div>
+        <div class="facility-info">
+          <h3>프리미엄 페디 & 풋 스파 존</h3>
+          <p>화사한 옐로우 체어와 감각적인 네온 인테리어 공간에서 쾌적한 족욕과 풋 케어를 즐기실 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="facility-card">
+        <div class="facility-img" style="background-image: url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80');"></div>
+        <div class="facility-info">
+          <h3>1층 Cream Cafe & 라운지</h3>
+          <p>"All you need is love and more coffee." 테라피 전후 시원한 음료와 함께 편안한 여유를 제공합니다.</p>
+        </div>
+      </div>
+
+      <div class="facility-card">
+        <div class="facility-img" style="background-image: url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=600&q=80');"></div>
+        <div class="facility-info">
+          <h3>여행객 맞춤 짐 보관 서비스</h3>
+          <p>체크인 전후 또는 공항 이동 전 무거운 짐을 안전하게 보관해 드려 가벼운 몸으로 힐링할 수 있습니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 세 번째 섹션: 서비스 & 가격 (실제 가격표 반영) -->
+  <section id="pricing">
+    <div class="section-header">
+      <span>TREATMENT & PRICE</span>
+      <h2>테라피 프로그램 및 요금 안내</h2>
+      <p style="color: #666; margin-top: 0.5rem;">※ 모든 스파 코스는 <b>팁 포함</b> 가격입니다.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- 크림 전신 마사지 -->
+      <div class="pricing-card featured">
+        <span class="badge">SIGNATURE</span>
+        <h3 class="card-title">크림 전신 마사지</h3>
+        <p class="card-desc">100% 고품질 크림을 사용한 시그니처 릴랙싱 전신 테라피</p>
+        <ul class="price-list">
+          <li class="price-item">
+            <span class="price-time">30분</span>
+            <span class="price-cost">200,000 ₫</span>
+          </li>
+          <li class="price-item">
+            <span class="price-time">60분</span>
+            <span class="price-cost">400,000 ₫</span>
+          </li>
+          <li class="price-item">
+            <span class="price-time">90분</span>
+            <span class="price-cost">500,000 ₫</span>
+          </li>
+          <li class="price-item">
+            <span class="price-time">120분</span>
+            <span class="price-cost">600,000 ₫</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 프리미엄 4핸드 마사지 -->
+      <div class="pricing-card">
+        <span class="badge">NEW</span>
+        <h3 class="card-title">프리미엄 4핸드 마사지</h3>
+        <p class="card-desc">두 명의 전문 테라피스트가 동시에 교감하며 케어하는 럭셔리 프로그램</p>
+        <ul class="price-list">
+          <li class="price-item">
+            <span class="price-time">60분</span>
+            <span class="price-cost">600,000 ₫</span>
+          </li>
+          <li class="price-item">
+            <span class="price-time">90분</span>
+            <span class="price-cost">800,000 ₫</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 추가 케어 서비스 -->
+      <div class="pricing-card">
+        <h3 class="card-title">스페셜 케어</h3>
+        <p class="card-desc">테라피와 함께 받으면 더욱 상쾌한 두피 릴랙싱</p>
+        <ul class="price-list">
+          <li class="price-item">
+            <span class="price-time">샴푸 서비스</span>
+            <span class="price-cost">100,000 ₫</span>
+          </li>
+          <li class="price-item">
+            <span class="price-time">스파 이용객 음료</span>
+            <span class="price-cost" style="color: #27ae60;">무료 제공 (FREE)</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 카페 음료 메뉴 안내 -->
+    <div class="cafe-section" id="cafe">
+      <div class="section-header" style="margin-bottom: 2rem;">
+        <span>CREAM CAFE MENU</span>
+        <h3 style="font-size: 1.8rem; margin-top: 0.3rem;">카페 음료 라인업</h3>
+      </div>
+      <div class="cafe-notice">
+        ✨ <b>스파 이용 시 모든 음료 무료 제공!</b> (일반 주문 시 모든 음료 50,000 ₫)
+      </div>
+
+      <div class="cafe-menu-grid">
+        <div class="cafe-col">
+          <h4>커피류 (Coffee)</h4>
+          <ul class="cafe-list">
+            <li>아메리카노 (Americano)</li>
+            <li>박시우 (Bac xiu)</li>
+            <li>카페라떼 (Cafe latte)</li>
+            <li>에그커피 (Cafe kem trung)</li>
+            <li>소금커피 (Cafe muoi)</li>
+            <li>말차라떼 (Matcha latte)</li>
+          </ul>
+        </div>
+
+        <div class="cafe-col">
+          <h4>과일 쥬스 (Juice)</h4>
+          <ul class="cafe-list">
+            <li>수박 (Watermelon)</li>
+            <li>오렌지 (Orange)</li>
+            <li>당근 (Carrot)</li>
+            <li>당근+오렌지</li>
+            <li>파인애플 (Pineapple)</li>
+            <li>짜다오 깜싸 (Trà đào cam sả)</li>
+          </ul>
+        </div>
+
+        <div class="cafe-col">
+          <h4>차류 (Tea)</h4>
+          <ul class="cafe-list">
+            <li>생강차 (Ginger tea)</li>
+            <li>레몬차 (Lemon tea)</li>
+            <li>유자차 (Yuzu tea)</li>
+            <li>캐모마일 (Chamomile)</li>
+            <li>로즈마리 (Rosemary)</li>
+            <li>얼그레이 / 루이보스</li>
+          </ul>
+        </div>
+
+        <div class="cafe-col">
+          <h4>스무디 (Smoothie)</h4>
+          <ul class="cafe-list">
+            <li>망고 스무디 (Mango)</li>
+            <li>코코넛 커피 스무디</li>
+            <li>미숫가루 (Millet powder)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 푸터 및 예약 안내 -->
+  <footer>
+    <div class="footer-wrap">
+      <div class="footer-info">
+        <h3>Cream Spa & Cafe</h3>
+        <p><b>위치:</b> 하노이 미딩 파이브스타 (My Dinh Five Star)</p>
+        <p><b>전화:</b> 096 542 9019</p>
+        <p><b>카카오톡 예약:</b> kingmassage77</p>
+      </div>
+      <div class="footer-actions">
+        <a href="tel:0965429019" class="btn-contact">📞 전화로 문의하기</a>
+        <a href="https://open.kakao.com" target="_blank" class="btn-contact" style="background: #fee500; color: #3c1e1e;">💬 카카오톡 간편 예약</a>
+      </div>
+    </div>
+    <div class="copyright">
+      &copy; 2026 Cream Spa & Cafe Hanoi My Dinh. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- 첫 페이지 크로스페이드 트랜지션 스크립트 -->
+  <script>
+    const slides = document.querySelectorAll('.hero-slide');
+    let currentSlide = 0;
+
+    function nextSlide() {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
+
+    // 5초 주기로 스파 무드 배경 부드럽게 전환
+    setInterval(nextSlide, 5000);
+  </script>
+</body>
+</html>
